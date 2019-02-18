@@ -1,0 +1,39 @@
+.grid {
+  display: block;
+  position: relative;
+}
+
+.grid--column {
+  display: block;
+  position: relative;
+  width: 33.333333%;
+  width: calc(100% / 3);
+  float: left;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.grid--column:first-child {
+  padding-right: 15px;
+}
+
+.grid--column ~ .grid--column {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.grid--column:last-of-type {
+  padding-right: 0;
+}
+
+@media (max-width: 991px) {
+  .grid--column {
+    width: 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .grid--column {
+    width: 100%;
+  }
+}
