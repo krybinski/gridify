@@ -1,7 +1,7 @@
 {
   "name": "gridify",
   "version": "1.0.0",
-  "main": "webpack.conf.js",
+  "description": "Lightweight, simple and pure javascript plugin that creates a Pinterest-like grid.",
   "scripts": {
     "dev": "webpack --watch --mode development",
     "build": "webpack --mode production",

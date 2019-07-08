@@ -1,4 +1,5 @@
-import { parseSelector, removeItemFromDom } from './utils';
+import { parseSelector, prepareEvent, removeItemFromDom } from './utils';
+import CONSTANTS from './constants';
 
 (function (factory) {
   window.Gridify = factory();
@@ -94,8 +95,6 @@ import { parseSelector, removeItemFromDom } from './utils';
 
         this._appendHtml(container, content);
       }
-
-      this.options.onResize();
     }
 
     _resize() {
@@ -103,12 +102,13 @@ import { parseSelector, removeItemFromDom } from './utils';
         this.columnsNumber = this._getColumnsNumber();
         this._setColumnsPosition();
         this._draw();
+        prepareEvent(CONSTANTS.EVENTS.RESIZED, this.container);
       }
     }
 
     _init() {
       window.addEventListener('DOMContentLoaded', () => {
-        this.options.onInit();
+        prepareEvent(CONSTANTS.EVENTS.INIT, this.container);
         this.columnsNumber = this._getColumnsNumber();
         this._recordAndRemove();
         this._draw();
@@ -124,13 +124,7 @@ import { parseSelector, removeItemFromDom } from './utils';
     containerSelector: '.grid',
     itemSelector: '.grid--item',
     columnSelector: '.grid--column',
-    resizable: true,
-    onInit: () => {
-      console.log('--- onInit ---');
-    },
-    onResize: () => {
-      console.log('--- onResize ---');
-    }
+    resizable: true
   };
 
   return Gridify;

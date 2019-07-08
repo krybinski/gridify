@@ -7,3 +7,9 @@ export const parseSelector = (selector) => {
 export const removeItemFromDom = (item) => {
   item.parentNode.removeChild(item);
 };
+
+// Create event
+export const prepareEvent = (name, element) => {
+  const event = new Event(name);
+  element.dispatchEvent(event);
+};

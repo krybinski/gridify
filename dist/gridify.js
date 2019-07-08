@@ -99,13 +99,26 @@ var parseSelector = function parseSelector(selector) {
 
 var removeItemFromDom = function removeItemFromDom(item) {
   item.parentNode.removeChild(item);
+}; // Create event
+
+var prepareEvent = function prepareEvent(name, element) {
+  var event = new Event(name);
+  element.dispatchEvent(event);
 };
+// CONCATENATED MODULE: ./src/constants.js
+/* harmony default export */ var constants = ({
+  EVENTS: {
+    INIT: 'gridify:init',
+    RESIZED: 'gridify:resized'
+  }
+});
 // CONCATENATED MODULE: ./src/index.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -219,8 +232,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this._appendHtml(container, content);
         }
-
-        this.options.onResize();
       }
     }, {
       key: "_resize",
@@ -231,17 +242,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this._setColumnsPosition();
 
           this._draw();
+
+          prepareEvent(constants.EVENTS.RESIZED, this.container);
         }
       }
     }, {
       key: "_init",
       value: function _init() {
-        this.options.onInit();
-        this.columnsNumber = this._getColumnsNumber();
+        var _this2 = this;
 
-        this._recordAndRemove();
+        window.addEventListener('DOMContentLoaded', function () {
+          prepareEvent(constants.EVENTS.INIT, _this2.container);
+          _this2.columnsNumber = _this2._getColumnsNumber();
 
-        this._draw();
+          _this2._recordAndRemove();
+
+          _this2._draw();
+        }, false);
 
         if (this.options.resizable) {
           window.addEventListener('resize', this._resize.bind(this), false);
@@ -256,13 +273,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     containerSelector: '.grid',
     itemSelector: '.grid--item',
     columnSelector: '.grid--column',
-    resizable: true,
-    onInit: function onInit() {
-      console.log('--- Gridify: onInit ---');
-    },
-    onResize: function onResize() {
-      console.log('--- Gridify: onResize ---');
-    }
+    resizable: true
   };
   return Gridify;
 });
