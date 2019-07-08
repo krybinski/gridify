@@ -3,7 +3,7 @@ import { parseSelector, removeItemFromDom } from './utils';
 (function (factory) {
   window.Gridify = factory();
 })(function () {
-  'use strict'
+  'use strict';
 
   class Gridify {
     constructor(opts) {
@@ -13,26 +13,26 @@ import { parseSelector, removeItemFromDom } from './utils';
       this.items = this.container.querySelectorAll(this.options.itemSelector);
       this.elementsData = [];
       this.columns = [];
-      this.columnsNumber = this.getColumnsNumber();
+      this.columnsNumber = this._getColumnsNumber();
 
-      this.init();
+      this._init();
     }
 
     // Get columns elements from DOM
-    getColumns () {
+    _getColumns() {
       return this.container.querySelectorAll(this.options.columnSelector);
     }
 
     // Get first column element from DOM
-    getFirstColumn () {
-      return this.getColumns()[0];
+    _getFirstColumn() {
+      return this._getColumns()[0];
     }
 
     // Get number of columns
-    getColumnsNumber () {
+    _getColumnsNumber() {
       let instanceForCompute = false;
 
-      if (this.getColumns().length === 0) {
+      if (this._getColumns().length === 0) {
         instanceForCompute = true;
 
         const column = document.createElement('div');
@@ -40,18 +40,18 @@ import { parseSelector, removeItemFromDom } from './utils';
         this.container.appendChild(column);
       }
 
-      const columnWidth = this.getFirstColumn().offsetWidth;
+      const columnWidth = this._getFirstColumn().offsetWidth;
       const containerWidth = this.container.offsetWidth;
 
       if (instanceForCompute) {
-        this.getColumns().forEach(element => removeItemFromDom(element));
+        this._getColumns().forEach(element => removeItemFromDom(element));
       }
 
       return Math.round(containerWidth / columnWidth);
     }
 
     // Save items content and params and removes originals items
-    recordAndRemove () {
+    _recordAndRemove() {
       this.items.forEach((item, index) => {
         this.elementsData.push({
           content: item.outerHTML,
@@ -63,14 +63,14 @@ import { parseSelector, removeItemFromDom } from './utils';
     }
 
     // Determines in which column an item should be
-    setColumnsPosition () {
+    _setColumnsPosition() {
       for (const i in this.elementsData) {
         this.elementsData[i].column = i % this.columnsNumber;
       }
     }
 
     // Append html string to DOM element
-    appendHtml(element, str) {
+    _appendHtml(element, str) {
       const div = document.createElement('div');
       div.innerHTML = str;
       while (div.children.length > 0) {
@@ -79,7 +79,7 @@ import { parseSelector, removeItemFromDom } from './utils';
     }
 
     // Write and append html
-    draw () {
+    _draw() {
       for (let i = 0; i < this.columnsNumber; i++) {
         const column = document.createElement('div');
         column.classList.add(parseSelector(this.options.columnSelector));
@@ -92,27 +92,30 @@ import { parseSelector, removeItemFromDom } from './utils';
         const index = i % this.columnsNumber;
         const container = this.container.querySelectorAll(this.options.columnSelector)[index];
 
-        this.appendHtml(container, content);
+        this._appendHtml(container, content);
       }
 
       this.options.onResize();
     }
 
-    resize() {
-      if (this.columnsNumber !== this.getColumnsNumber()) {
-        this.columnsNumber = this.getColumnsNumber();
-        this.setColumnsPosition();
-        this.draw();
+    _resize() {
+      if (this.columnsNumber !== this._getColumnsNumber()) {
+        this.columnsNumber = this._getColumnsNumber();
+        this._setColumnsPosition();
+        this._draw();
       }
     }
 
-    init() {
-      this.columnsNumber = this.getColumnsNumber();
-      this.recordAndRemove();
-      this.draw();
+    _init() {
+      window.addEventListener('DOMContentLoaded', () => {
+        this.options.onInit();
+        this.columnsNumber = this._getColumnsNumber();
+        this._recordAndRemove();
+        this._draw();
+      }, false);
 
       if (this.options.resizable) {
-        window.addEventListener('resize', this.resize.bind(this), false);
+        window.addEventListener('resize', this._resize.bind(this), false);
       }
     }
   }
@@ -122,8 +125,11 @@ import { parseSelector, removeItemFromDom } from './utils';
     itemSelector: '.grid--item',
     columnSelector: '.grid--column',
     resizable: true,
+    onInit: () => {
+      console.log('--- onInit ---');
+    },
     onResize: () => {
-      console.log('grid resized');
+      console.log('--- onResize ---');
     }
   };
 

@@ -81,33 +81,191 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! no exports provided */
+/******/ ([
+/* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ \"./src/utils.js\");\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n(function (factory) {\n  window.Gridify = factory();\n})(function () {\n  'use strict';\n\n  var Gridify =\n  /*#__PURE__*/\n  function () {\n    function Gridify(opts) {\n      _classCallCheck(this, Gridify);\n\n      this.options = Object.assign(Gridify.defaults, opts);\n      this.container = document.querySelector(this.options.containerSelector);\n      this.items = this.container.querySelectorAll(this.options.itemSelector);\n      this.elementsData = [];\n      this.columns = [];\n      this.columnsNumber = this.getColumnsNumber();\n      this.init();\n    } // Get columns elements from DOM\n\n\n    _createClass(Gridify, [{\n      key: \"getColumns\",\n      value: function getColumns() {\n        return this.container.querySelectorAll(this.options.columnSelector);\n      } // Get first column element from DOM\n\n    }, {\n      key: \"getFirstColumn\",\n      value: function getFirstColumn() {\n        return this.getColumns()[0];\n      } // Get number of columns\n\n    }, {\n      key: \"getColumnsNumber\",\n      value: function getColumnsNumber() {\n        var instanceForCompute = false;\n\n        if (this.getColumns().length === 0) {\n          instanceForCompute = true;\n          var column = document.createElement('div');\n          column.classList.add(Object(_utils__WEBPACK_IMPORTED_MODULE_0__[\"parseSelector\"])(this.options.columnSelector));\n          this.container.appendChild(column);\n        }\n\n        var columnWidth = this.getFirstColumn().offsetWidth;\n        var containerWidth = this.container.offsetWidth;\n\n        if (instanceForCompute) {\n          this.getColumns().forEach(function (element) {\n            return Object(_utils__WEBPACK_IMPORTED_MODULE_0__[\"removeItemFromDom\"])(element);\n          });\n        }\n\n        return Math.round(containerWidth / columnWidth);\n      } // Save items content and params and removes originals items\n\n    }, {\n      key: \"recordAndRemove\",\n      value: function recordAndRemove() {\n        var _this = this;\n\n        this.items.forEach(function (item, index) {\n          _this.elementsData.push({\n            content: item.outerHTML,\n            column: index % _this.columnsNumber\n          });\n\n          Object(_utils__WEBPACK_IMPORTED_MODULE_0__[\"removeItemFromDom\"])(item);\n        });\n      } // Determines in which column an item should be\n\n    }, {\n      key: \"setColumnsPosition\",\n      value: function setColumnsPosition() {\n        for (var i in this.elementsData) {\n          this.elementsData[i].column = i % this.columnsNumber;\n        }\n      } // Append html string to DOM element\n\n    }, {\n      key: \"appendHtml\",\n      value: function appendHtml(element, str) {\n        var div = document.createElement('div');\n        div.innerHTML = str;\n\n        while (div.children.length > 0) {\n          element.appendChild(div.children[0]);\n        }\n      } // Write and append html\n\n    }, {\n      key: \"draw\",\n      value: function draw() {\n        for (var i = 0; i < this.columnsNumber; i++) {\n          var column = document.createElement('div');\n          column.classList.add(Object(_utils__WEBPACK_IMPORTED_MODULE_0__[\"parseSelector\"])(this.options.columnSelector));\n          this.container.appendChild(column);\n        } // Creates items\n\n\n        for (var _i in this.elementsData) {\n          var content = this.elementsData[_i].content !== undefined ? this.elementsData[_i].content : '';\n          var index = _i % this.columnsNumber;\n          var container = this.container.querySelectorAll(this.options.columnSelector)[index];\n          this.appendHtml(container, content);\n        }\n\n        this.options.onResize();\n      }\n    }, {\n      key: \"resize\",\n      value: function resize() {\n        if (this.columnsNumber !== this.getColumnsNumber()) {\n          this.columnsNumber = this.getColumnsNumber();\n          this.setColumnsPosition();\n          this.draw();\n        }\n      }\n    }, {\n      key: \"init\",\n      value: function init() {\n        this.columnsNumber = this.getColumnsNumber();\n        this.recordAndRemove();\n        this.draw();\n\n        if (this.options.resizable) {\n          window.addEventListener('resize', this.resize.bind(this), false);\n        }\n      }\n    }]);\n\n    return Gridify;\n  }();\n\n  Gridify.defaults = {\n    containerSelector: '.grid',\n    itemSelector: '.grid--item',\n    columnSelector: '.grid--column',\n    resizable: true,\n    onResize: function onResize() {\n      console.log('grid resized');\n    }\n  };\n  return Gridify;\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+__webpack_require__.r(__webpack_exports__);
 
-/***/ }),
+// CONCATENATED MODULE: ./src/utils.js
+// Get a class name without the selector
+var parseSelector = function parseSelector(selector) {
+  return selector.slice(1, selector.length);
+}; // Remove item from DOM tree
 
-/***/ "./src/utils.js":
-/*!**********************!*\
-  !*** ./src/utils.js ***!
-  \**********************/
-/*! exports provided: parseSelector, removeItemFromDom */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+var removeItemFromDom = function removeItemFromDom(item) {
+  item.parentNode.removeChild(item);
+};
+// CONCATENATED MODULE: ./src/index.js
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"parseSelector\", function() { return parseSelector; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"removeItemFromDom\", function() { return removeItemFromDom; });\n// Get a class name without the selector\nvar parseSelector = function parseSelector(selector) {\n  return selector.slice(1, selector.length);\n}; // Remove item from DOM tree\n\nvar removeItemFromDom = function removeItemFromDom(item) {\n  item.parentNode.removeChild(item);\n};\n\n//# sourceURL=webpack:///./src/utils.js?");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+(function (factory) {
+  window.Gridify = factory();
+})(function () {
+  'use strict';
+
+  var Gridify =
+  /*#__PURE__*/
+  function () {
+    function Gridify(opts) {
+      _classCallCheck(this, Gridify);
+
+      this.options = Object.assign(Gridify.defaults, opts);
+      this.container = document.querySelector(this.options.containerSelector);
+      this.items = this.container.querySelectorAll(this.options.itemSelector);
+      this.elementsData = [];
+      this.columns = [];
+      this.columnsNumber = this._getColumnsNumber();
+
+      this._init();
+    } // Get columns elements from DOM
+
+
+    _createClass(Gridify, [{
+      key: "_getColumns",
+      value: function _getColumns() {
+        return this.container.querySelectorAll(this.options.columnSelector);
+      } // Get first column element from DOM
+
+    }, {
+      key: "_getFirstColumn",
+      value: function _getFirstColumn() {
+        return this._getColumns()[0];
+      } // Get number of columns
+
+    }, {
+      key: "_getColumnsNumber",
+      value: function _getColumnsNumber() {
+        var instanceForCompute = false;
+
+        if (this._getColumns().length === 0) {
+          instanceForCompute = true;
+          var column = document.createElement('div');
+          column.classList.add(parseSelector(this.options.columnSelector));
+          this.container.appendChild(column);
+        }
+
+        var columnWidth = this._getFirstColumn().offsetWidth;
+
+        var containerWidth = this.container.offsetWidth;
+
+        if (instanceForCompute) {
+          this._getColumns().forEach(function (element) {
+            return removeItemFromDom(element);
+          });
+        }
+
+        return Math.round(containerWidth / columnWidth);
+      } // Save items content and params and removes originals items
+
+    }, {
+      key: "_recordAndRemove",
+      value: function _recordAndRemove() {
+        var _this = this;
+
+        this.items.forEach(function (item, index) {
+          _this.elementsData.push({
+            content: item.outerHTML,
+            column: index % _this.columnsNumber
+          });
+
+          removeItemFromDom(item);
+        });
+      } // Determines in which column an item should be
+
+    }, {
+      key: "_setColumnsPosition",
+      value: function _setColumnsPosition() {
+        for (var i in this.elementsData) {
+          this.elementsData[i].column = i % this.columnsNumber;
+        }
+      } // Append html string to DOM element
+
+    }, {
+      key: "_appendHtml",
+      value: function _appendHtml(element, str) {
+        var div = document.createElement('div');
+        div.innerHTML = str;
+
+        while (div.children.length > 0) {
+          element.appendChild(div.children[0]);
+        }
+      } // Write and append html
+
+    }, {
+      key: "_draw",
+      value: function _draw() {
+        for (var i = 0; i < this.columnsNumber; i++) {
+          var column = document.createElement('div');
+          column.classList.add(parseSelector(this.options.columnSelector));
+          this.container.appendChild(column);
+        } // Creates items
+
+
+        for (var _i in this.elementsData) {
+          var content = this.elementsData[_i].content !== undefined ? this.elementsData[_i].content : '';
+          var index = _i % this.columnsNumber;
+          var container = this.container.querySelectorAll(this.options.columnSelector)[index];
+
+          this._appendHtml(container, content);
+        }
+
+        this.options.onResize();
+      }
+    }, {
+      key: "_resize",
+      value: function _resize() {
+        if (this.columnsNumber !== this._getColumnsNumber()) {
+          this.columnsNumber = this._getColumnsNumber();
+
+          this._setColumnsPosition();
+
+          this._draw();
+        }
+      }
+    }, {
+      key: "_init",
+      value: function _init() {
+        this.options.onInit();
+        this.columnsNumber = this._getColumnsNumber();
+
+        this._recordAndRemove();
+
+        this._draw();
+
+        if (this.options.resizable) {
+          window.addEventListener('resize', this._resize.bind(this), false);
+        }
+      }
+    }]);
+
+    return Gridify;
+  }();
+
+  Gridify.defaults = {
+    containerSelector: '.grid',
+    itemSelector: '.grid--item',
+    columnSelector: '.grid--column',
+    resizable: true,
+    onInit: function onInit() {
+      console.log('--- Gridify: onInit ---');
+    },
+    onResize: function onResize() {
+      console.log('--- Gridify: onResize ---');
+    }
+  };
+  return Gridify;
+});
 
 /***/ })
-
-/******/ });
+/******/ ]);

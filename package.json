@@ -1,7 +1,6 @@
 {
   "name": "gridify",
   "version": "1.0.0",
-  "description": "",
   "main": "webpack.conf.js",
   "scripts": {
     "dev": "webpack --watch --mode development",
@@ -19,16 +18,16 @@
   },
   "homepage": "https://github.com/krybinski/gridify#readme",
   "devDependencies": {
-    "@babel/core": "7.3.3",
-    "@babel/preset-env": "7.3.1",
-    "@babel/register": "7.0.0",
-    "babel-loader": "8.0.5",
-    "eslint": "5.14.1",
-    "eslint-config-prettier": "4.0.0",
-    "eslint-plugin-prettier": "3.0.1",
-    "prettier": "1.16.4",
-    "uglifyjs-webpack-plugin": "2.1.1",
-    "webpack": "4.29.4",
-    "webpack-cli": "3.2.3"
+    "@babel/core": "7.5.0",
+    "@babel/preset-env": "7.5.0",
+    "@babel/register": "7.4.4",
+    "babel-loader": "8.0.6",
+    "eslint": "6.0.1",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "prettier": "1.18.2",
+    "uglifyjs-webpack-plugin": "2.1.3",
+    "webpack": "4.35.3",
+    "webpack-cli": "3.3.5"
   }
 }

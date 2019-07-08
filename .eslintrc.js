@@ -13,6 +13,9 @@ module.exports = {
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "semi": 2,
+    "indent": ["error", 2],
+    "quotes": [2, "single"]
   }
 };
