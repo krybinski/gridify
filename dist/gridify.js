@@ -251,14 +251,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function _init() {
         var _this2 = this;
 
-        window.addEventListener('DOMContentLoaded', function () {
+        var loadedHandler = function loadedHandler() {
           prepareEvent(constants.EVENTS.INIT, _this2.container);
           _this2.columnsNumber = _this2._getColumnsNumber();
 
           _this2._recordAndRemove();
 
           _this2._draw();
-        }, false);
+        };
+
+        window.addEventListener('DOMContentLoaded', loadedHandler, false);
 
         if (this.options.resizable) {
           window.addEventListener('resize', this._resize.bind(this), false);

@@ -1,14 +1,14 @@
 import { parseSelector, prepareEvent, removeItemFromDom } from './utils';
 import CONSTANTS from './constants';
 
-(function (factory) {
+(function(factory) {
   window.Gridify = factory();
-})(function () {
+})(function() {
   'use strict';
 
   class Gridify {
     constructor(opts) {
-      this.options = Object.assign(Gridify.defaults , opts);
+      this.options = Object.assign(Gridify.defaults, opts);
 
       this.container = document.querySelector(this.options.containerSelector);
       this.items = this.container.querySelectorAll(this.options.itemSelector);
@@ -89,7 +89,8 @@ import CONSTANTS from './constants';
 
       // Creates items
       for (const i in this.elementsData) {
-        const content = (this.elementsData[i].content !== undefined) ? this.elementsData[i].content : '';
+        const content =
+          this.elementsData[i].content !== undefined ? this.elementsData[i].content : '';
         const index = i % this.columnsNumber;
         const container = this.container.querySelectorAll(this.options.columnSelector)[index];
 
@@ -107,12 +108,14 @@ import CONSTANTS from './constants';
     }
 
     _init() {
-      window.addEventListener('DOMContentLoaded', () => {
+      const loadedHandler = () => {
         prepareEvent(CONSTANTS.EVENTS.INIT, this.container);
         this.columnsNumber = this._getColumnsNumber();
         this._recordAndRemove();
         this._draw();
-      }, false);
+      };
+
+      window.addEventListener('DOMContentLoaded', loadedHandler, false);
 
       if (this.options.resizable) {
         window.addEventListener('resize', this._resize.bind(this), false);
@@ -124,7 +127,7 @@ import CONSTANTS from './constants';
     containerSelector: '.grid',
     itemSelector: '.grid--item',
     columnSelector: '.grid--column',
-    resizable: true
+    resizable: true,
   };
 
   return Gridify;
